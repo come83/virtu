@@ -64,6 +64,14 @@ Caractéristiques de choi des disques
 * **Un datastore** est une entité de stockage virtuel gérable créée par les hôtes VMware ESX/ES0Xi, généralement utilisée comme dépôt pour les fichiers de machines virtuelles, y compris les fichiers journaux, les scripts, les fichiers de configuration, les disques virtuels, etc.
 
 * **NFS (Network Filesystem Storage)** : Il s’agit d’un stockage connecté au réseau ( Network attadched storage ) qui peut être partagé sur un cluster dans vSphere. Il permet à un utilisateur sur un ordinateur client d’accéder à des fichiers sur un réseau similaire au stockage local. Les volumes NFS sont créés à la fin du stockage, puis vous devez les ajouter sur ESXi en tant que datastore.
+    * Avantages :
+        * Processus de montage du systeme de fichier transparent
+        * Compatible avec linux, w, mac
+        * même fichiers accessibles par +sieurs clients
+        * les machines partagent les mm appli
+        * centralisation des données -6> administration + facile
+
+* **SCSI** : permet de virtualiser un disque dur, apparaissent sur une machine virtuelle comme différents types de contrôleurs basés sur des blocs
 
 * **NTP** est un protocole de synchronisation de temps réseau à faible coût et tolérant les pannes, utilisé pour aligner les horloges informatiques sur l’heure UTC. ESXi dispose d’une capacité NTP intégrée, y compris un port de l’implémentation de référence et les API du noyau nécessaires pour le supporter.
 
@@ -72,11 +80,17 @@ Caractéristiques de choi des disques
 
 ### Raids 
 
-* 0 : Stripping : les disques sont synchronisés. 1 de perdu, tout le reste part vavec
+* 0 : Stripping : données écrites à travers tous les lecteurs + rapide mais perte d'un disque = perte des données
 
-* 1 : Mirroring
+* 1 : Mirroring : données du disque primaire sont dupliquées dans un autre = sauvegarde si un disque tombe en panne
 
-* 5 : Fonctionne avec un disque de parité. a + b = c, c stocké sur le disque de parité. Si on perd une donnée, on peut faire c - a = b, par exemple.
+* 01 : 0+1 = par ex 2 raid 0 ( un mirrorer ) donc ça cré un raid 1 
+
+* 10/1+0 : Le raid 0 est partagé entre les 2 matrices raid 1
+
+* 5 : compromis entre la tolérance de pannes, la rapidité et le coût.
+
+Fonctionne avec un disque de parité. a + b = c, c stocké sur le disque de parité. Si on perd une donnée, on peut faire c - a = b, par exemple.
 
 
 
