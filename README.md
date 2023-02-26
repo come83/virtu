@@ -3,12 +3,6 @@
  Ports group, VM Kernel
 
 
-
-
-SDMotion 
-
-Serveur physique 
-
 Vmotion vcernter et ses fonctionnalités
 Caractéristiques de choi des disques
 
@@ -58,6 +52,7 @@ Caractéristiques de choi des disques
 
 * VMware vSphere est un logiciel d’infrastructure de Cloud computing de l’éditeur VMware, c’est un hyperviseur de type 1 (Bare Metal), basé sur l’architecture VMware ESXi.VMware vSphere nécessite une configuration matérielle restreinte précisée dans le guide de comptabilité VMware. La gestion de ce serveur hôte peut se faire via plusieurs possibilités : par le navigateur Web avec une connexion directe, par une console cliente avec une connexion directe ou par un outil de gestion centralisée nommé VMware vCenter Server qui permet d’administrer l’ensemble des machines virtuelles, des hôtes physiques, de leurs ressources et des options de l’environnement (High Availability, vMotion, Storage vMotion, Distributed Resource Scheduler, Fault Tolerance) depuis une seule console.
 
+* **VMKERNEL** : Ce module « noyau » est le "cerveau" de VMware ESX ; il permet de gérer et de hiérarchiser l'ensemble des ressources matérielles (mémoire, processeur, disques, réseaux) en fonction de chaque serveur. De plus, c'est ce noyau qui est chargé de toute la gestion des ressources physiques pour ESX.
 
 **Le cloisonnement** : chaque système d’exploitation a un fonctionnement indépendant, et ne peut interférer avec les autres en aucune manière.
 **La transparence** : le fait de fonctionner en mode virtualisé ne change rien au fonctionnement du système d’exploitation et a fortiori des applications. La transparence implique la compatibilité : toutes les applications peuvent tourner sur un système virtualisé, et leur fonctionnement n’est en rien modifié.
@@ -72,25 +67,36 @@ Caractéristiques de choi des disques
 
 
 
-### vCenter (vMotion)
+### vCenter 
 
 vCenter est un composant de vSphere de VMware. Il est conçu pour offrir des capacités de gestion de serveur avancées à travers une plateforme centralisée. Il offre également une meilleure visibilité dans les environnements cloud hybrides, tout en automatisant et en fournissant une infrastructure virtuelle. De plus, vCenter vous permet de gérer les hôtes ESXi, ainsi que les machines virtuelles.
 
 ESXi et vCenter sont deux composants différents de vSphere. vCenter est un logiciel avancé de gestion de serveur généralement déployé comme une machine virtuelle Linux préconfigurée, tandis que ESXi est un hyperviseur virtualisé qui est installé uniquement sur les machines physiques. Ces deux éléments font partie de la solution vSphere.
 
- Il existe deux options pour déployer un serveur vCenter. Il peut être installé sur un serveur Windows physique ou virtuel, ou peut être déployé au moyen d’une appliance Linux OVA dans l’environnement virtuel lui-même.
+Il existe deux options pour déployer un serveur vCenter. Il peut être installé sur un serveur Windows physique ou virtuel, ou peut être déployé au moyen d’une appliance Linux OVA dans l’environnement virtuel lui-même.
 
-Il existe plusieurs options pour gérer un vCenter:
+* **vSphere vMotion** : SvMotion permet une migration à chaud sans interruption de service des charges de travail d’un serveur à un autre ( migration d'une vm vers un autre Datastore sans interruption )
+    * Migrations à chaud : 
+        * Optimiser automatiquement les machines virtuelles au sein de pools de ressources
+        * Effectuer une maintenance matérielle sans planifier d’interruption de service ni gêner le fonctionnement de l’entreprise
+        * Déplacer des machines virtuelles de serveurs défaillants ou peu performants
+    * Automatiser et planifier les migrations
+        * Migrer plusieurs machines virtuelles exécutant tout système d’exploitation sur tout type de matériel et de stockage pris en charge par vSphere, combiné à une piste d’audit
+        * Identifier le placement optimal d’une machine virtuelle en quelques secondes
 
-vSphere Client: c'est l'interface graphique de base pour gérer vCenter et les hôtes ESXi.
 
-vSphere Web Client: une version web de l'interface de gestion de vCenter qui peut être utilisée à partir d'un navigateur web.
+* **HA** : (Haute disponibilité) c’est la capacité d'un système à être fiable et disponible à tout moment, malgré les défaillances des composantes du système. ( fonctionnalité de vmotion, c'est le principe du **failover** : si un esx tombe, les vm sont migées ves un autre esx)
 
-vSphere HTML5 Web Client: une version plus moderne de l'interface de gestion de vCenter qui utilise HTML5 et peut être utilisée à partir d'un navigateur web.
+* **DRS**: (Dynamic Resource Schedulin) permet d'optimiser l'utilisation des ressources en répartissant les charges de travail virtuelles sur des hôtes esx.
 
-PowerCLI: une interface de ligne de commande basée sur PowerShell pour automatiser les tâches de gestion de vCenter.
+* **Un cluster** est un groupe de serveurs ou de nœuds de calcul qui travaillent ensemble pour effectuer des tâches plus complexes et augmenter la disponibilité et la tolérance aux pannes d'un système.
 
-Un cluster est un groupe de serveurs ou de nœuds de calcul qui travaillent ensemble pour effectuer des tâches plus complexes et augmenter la disponibilité et la tolérance aux pannes d'un système.
+* **DPM** : La fonction Distributed Power Management (DPM) de vSphere permet à un cluster DRS de réduire sa consommation d'énergie en activant et désactivant des hôtes sur la base de l'utilisation des ressources de cluster.
 
-HA: (Haute disponibilité) c’est la capacité d'un système à être fiable et disponible à tout moment, malgré les défaillances des composantes du système.
-DRS: (Dynamic Resource Schedulin) permet d'optimiser l'utilisation des ressources en répartissant les charges de travail virtuelles sur des hôtes.
+* **Fault tolerance** : Reprodui l'image d'une vm sur un autre hôte périodiquement, réduis le temps d'indisponibilité 
+
+* Il existe plusieurs options pour gérer un vCenter:
+    * vSphere Client: c'est l'interface graphique de base pour gérer vCenter et les hôtes ESXi.
+    * vSphere Web Client: une version web de l'interface de gestion de vCenter qui peut être utilisée à partir d'un navigateur web.
+    * vSphere HTML5 Web Client: une version plus moderne de l'interface de gestion de vCenter qui utilise HTML5 et peut être utilisée à partir d'un navigateur web.
+    * PowerCLI: une interface de ligne de commande basée sur PowerShell pour automatiser les tâches de gestion de vCenter.
