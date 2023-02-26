@@ -52,7 +52,20 @@ Caractéristiques de choi des disques
 
 * VMware vSphere est un logiciel d’infrastructure de Cloud computing de l’éditeur VMware, c’est un hyperviseur de type 1 (Bare Metal), basé sur l’architecture VMware ESXi.VMware vSphere nécessite une configuration matérielle restreinte précisée dans le guide de comptabilité VMware. La gestion de ce serveur hôte peut se faire via plusieurs possibilités : par le navigateur Web avec une connexion directe, par une console cliente avec une connexion directe ou par un outil de gestion centralisée nommé VMware vCenter Server qui permet d’administrer l’ensemble des machines virtuelles, des hôtes physiques, de leurs ressources et des options de l’environnement (High Availability, vMotion, Storage vMotion, Distributed Resource Scheduler, Fault Tolerance) depuis une seule console.
 
+
+* **Le vSwitch** est responsable de l'acheminement du trafic réseau au VMkernel, au VM Network, et au Service Console (ESX).
+
+* **VMkernel** permet de créer des cartes réseaux virtuelles pour mieux gérer les différents Vlan. 
+
+* **Une vm port groupe** permet de faire un parallèle avec les VLAN, qui permettent de compartimenter les ports d’un switch physique.
+
 * **VMKERNEL** : Ce module « noyau » est le "cerveau" de VMware ESX ; il permet de gérer et de hiérarchiser l'ensemble des ressources matérielles (mémoire, processeur, disques, réseaux) en fonction de chaque serveur. De plus, c'est ce noyau qui est chargé de toute la gestion des ressources physiques pour ESX.
+
+* **Un datastore** est une entité de stockage virtuel gérable créée par les hôtes VMware ESX/ES0Xi, généralement utilisée comme dépôt pour les fichiers de machines virtuelles, y compris les fichiers journaux, les scripts, les fichiers de configuration, les disques virtuels, etc.
+
+* **NFS (Network Filesystem Storage)** : Il s’agit d’un stockage connecté au réseau ( Network attadched storage ) qui peut être partagé sur un cluster dans vSphere. Il permet à un utilisateur sur un ordinateur client d’accéder à des fichiers sur un réseau similaire au stockage local. Les volumes NFS sont créés à la fin du stockage, puis vous devez les ajouter sur ESXi en tant que datastore.
+
+* **NTP** est un protocole de synchronisation de temps réseau à faible coût et tolérant les pannes, utilisé pour aligner les horloges informatiques sur l’heure UTC. ESXi dispose d’une capacité NTP intégrée, y compris un port de l’implémentation de référence et les API du noyau nécessaires pour le supporter.
 
 **Le cloisonnement** : chaque système d’exploitation a un fonctionnement indépendant, et ne peut interférer avec les autres en aucune manière.
 **La transparence** : le fait de fonctionner en mode virtualisé ne change rien au fonctionnement du système d’exploitation et a fortiori des applications. La transparence implique la compatibilité : toutes les applications peuvent tourner sur un système virtualisé, et leur fonctionnement n’est en rien modifié.
